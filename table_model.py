@@ -8,12 +8,10 @@ import pandas as pd
 from PyQt5.QtWidgets import QApplication, QTableView
 from PyQt5.QtCore import QAbstractTableModel, Qt
 
-df = pd.DataFrame({'a': ['Mary', 'Jim', 'John'],
-                   'b': [100, 200, 300],
-                   'c': ['a', 'b', 'c']})
-
 class pandasModel(QAbstractTableModel):
-
+    """
+    Class that inserts Pandas DataFrame data into Table Views of GUI
+    """    
     def __init__(self, data):
         QAbstractTableModel.__init__(self)
         self._data = data
@@ -37,10 +35,15 @@ class pandasModel(QAbstractTableModel):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+
+    df = pd.DataFrame({'a': ['Mary', 'Jim', 'John'],
+                   'b': [100, 200, 300],
+                   'c': ['a', 'b', 'c']})
     model = pandasModel(df)
+    
     view = QTableView()
     view.setModel(model)
-    # view.setModel(None)
     view.resize(800, 600)
     view.show()
+    
     sys.exit(app.exec_())
