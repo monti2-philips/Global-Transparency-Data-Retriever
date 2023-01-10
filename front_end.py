@@ -1,11 +1,16 @@
+"""
+Front End file for GUI - Generated from QtDesigner Application and then altered.
+"""
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from custom_widgets import CheckableComboBox
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        
+        # Main Window
         MainWindow.setObjectName("MainWindow")
-        # MainWindow.resize(900, 850)
         MainWindow.setFixedSize(900, 850)
         font = QtGui.QFont()
         font.setFamily("Calibri")
@@ -13,8 +18,12 @@ class Ui_MainWindow(object):
         MainWindow.setFont(font)
         MainWindow.setToolTip("")
         MainWindow.setToolTipDuration(-1)
+
+        # Central Widget
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
+        # Test Checkboxes
         self.testBox = QtWidgets.QGroupBox(self.centralwidget)
         self.testBox.setGeometry(QtCore.QRect(20, 80, 316, 66))
         sizePolicy = QtWidgets.QSizePolicy(
@@ -43,6 +52,8 @@ class Ui_MainWindow(object):
         self.thermalBool.setChecked(True)
         self.thermalBool.setObjectName("thermalBool")
         self.horizontalLayout.addWidget(self.thermalBool)
+
+        # Query Radio Buttons
         self.queryBox = QtWidgets.QGroupBox(self.centralwidget)
         self.queryBox.setGeometry(QtCore.QRect(20, 10, 352, 66))
         self.queryBox.setObjectName("queryBox")
@@ -55,9 +66,13 @@ class Ui_MainWindow(object):
         self.referenceBool = QtWidgets.QRadioButton(self.queryBox)
         self.referenceBool.setObjectName("referenceBool")
         self.horizontalLayout_2.addWidget(self.referenceBool)
+
+        # Data Input
         self.dataBox = QtWidgets.QGroupBox(self.centralwidget)
         self.dataBox.setGeometry(QtCore.QRect(20, 150, 490, 342))
         self.dataBox.setObjectName("dataBox")
+        
+        # Work Order Input
         self.workOrderInput = QtWidgets.QPlainTextEdit(self.dataBox)
         self.workOrderInput.setEnabled(True)
         self.workOrderInput.setGeometry(QtCore.QRect(20, 125, 450, 90))
@@ -68,9 +83,13 @@ class Ui_MainWindow(object):
         self.workOrderLabel.setGeometry(QtCore.QRect(20, 95, 122, 21))
         self.workOrderLabel.setToolTipDuration(-1)
         self.workOrderLabel.setObjectName("workOrderLabel")
+
+        # Reset Button
         self.inputReset = QtWidgets.QPushButton(self.dataBox)
         self.inputReset.setGeometry(QtCore.QRect(20, 290, 450, 30))
         self.inputReset.setObjectName("inputReset")
+
+        # Part Number Input
         self.partNumberLabel = QtWidgets.QLabel(self.dataBox)
         self.partNumberLabel.setGeometry(QtCore.QRect(20, 30, 131, 21))
         self.partNumberLabel.setToolTipDuration(-1)
@@ -81,6 +100,8 @@ class Ui_MainWindow(object):
         self.partNumberInput.setText("")
         self.partNumberInput.setMaxLength(12)
         self.partNumberInput.setObjectName("partNumberInput")
+
+        # Min Date Input
         self.minDateInput = QtWidgets.QDateEdit(self.dataBox)
         self.minDateInput.setEnabled(False)
         self.minDateInput.setGeometry(QtCore.QRect(20, 250, 125, 27))
@@ -95,6 +116,8 @@ class Ui_MainWindow(object):
         self.minDateLabel = QtWidgets.QLabel(self.dataBox)
         self.minDateLabel.setGeometry(QtCore.QRect(20, 220, 146, 21))
         self.minDateLabel.setObjectName("minDateLabel")
+
+        # Max Date Input
         self.maxDateLabel = QtWidgets.QLabel(self.dataBox)
         self.maxDateLabel.setGeometry(QtCore.QRect(200, 220, 148, 21))
         self.maxDateLabel.setObjectName("maxDateLabel")
@@ -109,6 +132,8 @@ class Ui_MainWindow(object):
         # self.maxDateInput.setDate(QtCore.QDate(2022, 1, 2))
         self.maxDateInput.setDate(QtCore.QDate.currentDate())
         self.maxDateInput.setObjectName("maxDateInput")
+
+        # Execute Query Button
         self.executeButton = QtWidgets.QPushButton(self.centralwidget)
         self.executeButton.setGeometry(QtCore.QRect(20, 500, 490, 33))
         font = QtGui.QFont()
@@ -118,6 +143,7 @@ class Ui_MainWindow(object):
         self.executeButton.setFont(font)
         self.executeButton.setObjectName("executeButton")
 
+        # Instructions Label
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QtCore.QRect(540, 20, 340, 500))
@@ -130,18 +156,20 @@ class Ui_MainWindow(object):
         font2 = QtGui.QFont()
         font2.setFamily(u"Calibri")
         font2.setPointSize(8)
-        #Table Header Font
+        # Table Header Font
         font3 = QtGui.QFont()
         font3.setFamily(u"Calibri")
         font3.setPointSize(10)
         font3.setBold(True)
         
-
+        # Data Preview
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
         self.tabWidget.setGeometry(QtCore.QRect(20, 540, 850, 250))
         self.tabWidget.setTabPosition(QtWidgets.QTabWidget.North)
         self.tabWidget.setTabShape(QtWidgets.QTabWidget.Rounded)
+        
+        # Acoustic Tab
         self.acousticTab = QtWidgets.QWidget()
         self.acousticTab.setObjectName(u"acousticTab")
         self.acousticView = QtWidgets.QTableView(self.acousticTab)
@@ -153,6 +181,8 @@ class Ui_MainWindow(object):
         self.acousticView.horizontalHeader().setFont(font3)
         self.acousticView.setAlternatingRowColors(True)
         self.tabWidget.addTab(self.acousticTab, "")
+
+        # AIM Tab
         self.aimTab = QtWidgets.QWidget()
         self.aimTab.setObjectName(u"aimTab")
         self.aimView = QtWidgets.QTableView(self.aimTab)
@@ -164,6 +194,8 @@ class Ui_MainWindow(object):
         self.aimView.horizontalHeader().setFont(font3)
         self.aimView.setAlternatingRowColors(True)
         self.tabWidget.addTab(self.aimTab, "")
+
+        # RFB Tab
         self.rfbTab = QtWidgets.QWidget()
         self.rfbTab.setObjectName(u"rfbTab")
         self.rfbView = QtWidgets.QTableView(self.rfbTab)
@@ -175,6 +207,8 @@ class Ui_MainWindow(object):
         self.rfbView.horizontalHeader().setFont(font3)
         self.rfbView.setAlternatingRowColors(True)
         self.tabWidget.addTab(self.rfbTab, "")
+
+        # Thermal Tab
         self.thermalTab = QtWidgets.QWidget()
         self.thermalTab.setObjectName(u"thermalTab")
         self.thermalView = QtWidgets.QTableView(self.thermalTab)
@@ -187,6 +221,7 @@ class Ui_MainWindow(object):
         self.thermalView.setAlternatingRowColors(True)
         self.tabWidget.addTab(self.thermalTab, "")
 
+        # AIM Resource Selection
         self.aimResourceLabel = QtWidgets.QLabel(self.dataBox)
         self.aimResourceLabel.setObjectName(u"aimResourceLabel")
         self.aimResourceLabel.setGeometry(QtCore.QRect(200, 20, 100, 21))
@@ -194,6 +229,8 @@ class Ui_MainWindow(object):
         self.aimCombo.setObjectName(u"aimCombo")
         self.aimCombo.setGeometry(QtCore.QRect(340, 20, 130, 25))
         self.aimCombo.setFont(font2)
+
+        # RFB Resource Selection
         self.rfbResourceLabel = QtWidgets.QLabel(self.dataBox)
         self.rfbResourceLabel.setObjectName(u"rfbResourceLabel")
         self.rfbResourceLabel.setGeometry(QtCore.QRect(200, 50, 100, 21))
@@ -201,6 +238,8 @@ class Ui_MainWindow(object):
         self.rfbCombo.setObjectName(u"rfbCombo")
         self.rfbCombo.setGeometry(QtCore.QRect(340, 50, 130, 25))
         self.rfbCombo.setFont(font2)
+
+        # Thermal Resource Selection
         self.thermalResourceLabel = QtWidgets.QLabel(self.dataBox)
         self.thermalResourceLabel.setObjectName(u"thermalResourceLabel")
         self.thermalResourceLabel.setGeometry(QtCore.QRect(200, 80, 140, 21))
@@ -216,7 +255,7 @@ class Ui_MainWindow(object):
         self.exportButton.setFont(font)
         self.exportButton.setEnabled(False)
 
-        ### MAIN WINDOW ###
+        # MAIN WINDOW - Create Status Bar
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -226,25 +265,31 @@ class Ui_MainWindow(object):
 
         ### RETRANSLATE UI ###
         self.retranslateUi(MainWindow)
-        self.variantBool.toggled['bool'].connect(
-            self.minDateInput.setDisabled)  # type: ignore
-        self.variantBool.toggled['bool'].connect(
-            self.maxDateInput.setDisabled)  # type: ignore
+
+        
+        # Reset Button actions
         self.inputReset.clicked.connect(
-            self.partNumberInput.clear)  # type: ignore
+            self.partNumberInput.clear)
         self.inputReset.clicked.connect(
-            self.workOrderInput.clear)  # type: ignore
+            self.workOrderInput.clear)
         self.inputReset.clicked.connect(
-            lambda: self.minDateInput.setDate(QtCore.QDate(2022, 1, 1)))  # type: ignore
+            lambda: self.minDateInput.setDate(QtCore.QDate(2022, 1, 1)))
         self.inputReset.clicked.connect(lambda: self.maxDateInput.setDate(
-            QtCore.QDate.currentDate()))  # type: ignore
-        self.inputReset.clicked.connect(lambda: self.aimCombo.reset())  # type: ignore
-        self.inputReset.clicked.connect(lambda: self.rfbCombo.reset())  # type: ignore
-        self.inputReset.clicked.connect(lambda: self.thermalCombo.reset())  # type: ignore
+            QtCore.QDate.currentDate()))
+        self.inputReset.clicked.connect(lambda: self.aimCombo.reset())
+        self.inputReset.clicked.connect(lambda: self.rfbCombo.reset())
+        self.inputReset.clicked.connect(lambda: self.thermalCombo.reset())
+
+        # Enable Export Button after first query run
         self.executeButton.clicked.connect(lambda: self.exportButton.setEnabled(True)) 
         
         self.tabWidget.setCurrentIndex(0)
 
+        # Logic for disabling inputs based on selection
+        self.variantBool.toggled['bool'].connect(
+            self.minDateInput.setDisabled)
+        self.variantBool.toggled['bool'].connect(
+            self.maxDateInput.setDisabled)
         self.workOrderInput.textChanged.connect(
             lambda: self.minDateInput.setEnabled(True) if ((self.workOrderInput.document().isEmpty()) and (self.referenceBool.isChecked())) else self.minDateInput.setDisabled(True))
         self.workOrderInput.textChanged.connect(
@@ -254,6 +299,7 @@ class Ui_MainWindow(object):
         self.referenceBool.toggled['bool'].connect(
             lambda: self.maxDateInput.setEnabled(True) if ((self.workOrderInput.document().isEmpty()) and (self.referenceBool.isChecked())) else self.maxDateInput.setDisabled(True))
 
+        # Setting tab key order
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.variantBool, self.referenceBool)
         MainWindow.setTabOrder(self.referenceBool, self.acousticBool)
@@ -262,6 +308,7 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.rfbBool, self.aimBool)
         MainWindow.setTabOrder(self.aimBool, self.workOrderInput)
 
+    # Retranslate to add text to each part of GUI
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
