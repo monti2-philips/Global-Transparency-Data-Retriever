@@ -1,5 +1,7 @@
 '''
 Source: https://www.youtube.com/watch?v=WnHkx-AvTBA
+
+Custom widget to create DropDown Box with Checks for selecting resources
 '''
 
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, \

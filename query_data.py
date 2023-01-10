@@ -9,7 +9,7 @@ class QueryData():
     def __init__(self, input_checkboxes: dict, input_part_number: str, input_text_box: list, min_date: datetime.datetime |None, max_date: datetime.datetime|None, vipx_mapping: str, database_credentials: str, aim_resources=["ANY RESOURCE"], rfb_resources=["ANY RESOURCE"], thermal_resources=["ANY RESOURCE"]):
 
         # Creating Class attributes that can be shared between methods - created upon Class Instance creation
-        self.input_checkboxes = input_checkboxes # List
+        self.input_checkboxes = input_checkboxes
         self.input_part_number = input_part_number
         self.input_text_box = input_text_box
         self.min_date = min_date
@@ -24,14 +24,15 @@ class QueryData():
         # Convert all default values to "DC_RESOURCE" for later dataframe filtering
         self.resources = {key: 'DC_RESOURCE' if value == ["ANY RESOURCE"] else value for key, value in self.resources.items()}
 
-
         # Dictionary corresponding DC_ITEM to table name in VIPx (DFData) database
         with open(vipx_mapping) as f:
             self.VIPx_product_dict = json.load(f)
 
+        # Dictionary with Database Credentials
         with open(database_credentials) as f:
             self.database_credentials = json.load(f)
 
+        # Empty DataFrame with set columns
         self.data = pd.DataFrame(columns=['DC_ITEM', 'DC_SFC', 'DC_TEST_DATE_TIME_LOCAL', 'DC_RESOURCE',
                         'DC_OPERATION', 'DC_MEASURE_NAME', 'DC_DESCRIPTION', 'DC_ACTUAL'], data=[])
 
@@ -54,6 +55,9 @@ class QueryData():
         return self.database_connection(server, database, username, password)
 
     def database_connection(self, server, database, username, password):
+        """
+        Create database connection with 30 second timeout parameter. If connection takes >30 secs than user is prompted to verify VPN if off-site and then exits.
+        """        
         timeout = 30
         try:
             cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+password, timeout=timeout)
@@ -67,8 +71,6 @@ class QueryData():
             msgBox.setStandardButtons(QtWidgets.QMessageBox.Close)
             msgBox.exec()
             sys.exit()
-
-        return cnxn
 
     def get_by_workorder(self):
         test_checkboxes = self.input_checkboxes.copy()
@@ -160,7 +162,7 @@ class QueryData():
         MES_cnxn = self.MES_connection()
         print('MES Connection Success')
 
-        # MES QUERY TO GATHER WORK ORDER VALUES
+        # MES query to gather work order values
         workorder_query = rf"""SELECT SHOP_ORDER, MIN(ACTUAL_START_DATE) as min_date, MAX(ACTUAL_COMP_DATE) as max_date FROM (
                             SELECT SHOP_ORDER, ACTUAL_START_DATE, ACTUAL_COMP_DATE FROM rep_ods.dbo.ODS_SHOP_ORDER
                             WHERE SITE = 'US9P' AND
@@ -226,7 +228,7 @@ class QueryData():
             return self.data
 
     def VIPx_query_create(self, item_num, sfc_list, min_date, max_date):
-        # Input should be item_num or self.input_part_number depending on data entry
+        # Input for item_num is self.input_part_number
         VIPx_cnxn = self.VIPx_connection()
         print('VIPx Connection Success')
         table_name = self.VIPx_product_dict[item_num]
@@ -236,10 +238,12 @@ class QueryData():
             # ValueMean is no longer valid column - replaced with average of Min and Max
             # Remove 'TestName' as column doesnt exist, use 'Parameter' as DC_DESCRIPTION
             VIPx_query_select = rf"SELECT '{item_num}' as DC_ITEM, '{item_num}-' + ProductSN as DC_SFC, time as DC_TEST_DATE_TIME_LOCAL, TestStation as DC_RESOURCE, 'VIPX_ACOUSTIC_TEST' as DC_OPERATION, Parameter as  DC_MEASURE_NAME, Parameter as DC_DESCRIPTION, {value_alias} as DC_ACTUAL"
+        
         elif table_name == 'xcube':
             value_alias = 'ParameterMean'
             # Remove 'TestName' as column doesnt exist, use 'Parameter' as DC_DESCRIPTION
             VIPx_query_select = rf"SELECT '{item_num}' as DC_ITEM, '{item_num}-' + ProductSN as DC_SFC, time as DC_TEST_DATE_TIME_LOCAL, TestStation as DC_RESOURCE, 'VIPX_ACOUSTIC_TEST' as DC_OPERATION, Parameter as  DC_MEASURE_NAME, Parameter as DC_DESCRIPTION, {value_alias} as DC_ACTUAL"
+        
         else:
             value_alias = 'ParameterValue'
             VIPx_query_select = rf"SELECT '{item_num}' as DC_ITEM, '{item_num}-' + ProductSN as DC_SFC, time as DC_TEST_DATE_TIME_LOCAL, TestStation as DC_RESOURCE, 'VIPX_ACOUSTIC_TEST' as DC_OPERATION, TestName + ' - ' + Parameter as  DC_MEASURE_NAME, TestName as DC_DESCRIPTION, {value_alias} as DC_ACTUAL"
