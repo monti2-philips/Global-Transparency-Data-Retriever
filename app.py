@@ -9,13 +9,17 @@ import json
 import datetime
 from PyQt5 import QtCore, QtGui, QtWidgets
 from front_end import Ui_MainWindow
+
+# Status Update - Python Startup
 print('Python Initializing...')
 
-
+# Status Update - Imports Complete
 print('Imports Complete')
 
+# Setting Base Directory for file references
 basedir = os.path.dirname(__file__)
 
+# Try-Except to set logo for taskbar
 try:
     from ctypes import windll  # Only exists on Windows.
     myappid = u'Philips.GlobalTransparency.DataRetriever'
@@ -23,36 +27,53 @@ try:
 except ImportError:
     pass
 
-
+# Main Window Class
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
 
+        # Set window title
         self.setWindowTitle("Global Transparency Data Retriever")
 
+        # Set window icon
         app_icon = QtGui.QIcon(os.path.join(basedir, "./static/logo.ico"))
         app.setWindowIcon(app_icon)
 
+        # Check for File Existence and Import Configuration Files
         self.inventory_mapping = self.get_config(os.path.join(basedir, './data/inventory.json'))
         self.resource_mapping = self.get_config(os.path.join(basedir, './data/operation-resource.json'))
         self.vipx_mapping = self.get_config(os.path.join(basedir, './data/vipX_product.json'))
         self.database_credentials = self.get_config(os.path.join(basedir, './data/database_credentials.json'))
         
+        # Set resources to comboboxes for AIM, RFB, and Thermal test stations
         with open(self.resource_mapping) as f:
             self.resources = json.load(f)
         self.aimCombo.addItems(self.resources["AIM"])
         self.rfbCombo.addItems(self.resources["RFB"])
         self.thermalCombo.addItems(self.resources["THERMAL"])
 
-        self.partNumberInput.setText('453561780787')
-        self.workOrderInput.setPlainText('302232423')
+        # Initiate run count
         self.runCount = 0
+
+        # Set "Run Query" button to run_query method
         self.executeButton.clicked.connect(lambda: self.run_query())
+        # Set "Export" button to save_dataframes method
         self.exportButton.clicked.connect(lambda: self.save_dataframes())
 
     def get_config(self, json_file):
-        # Check for JSON Configuration File existance
+        """
+        Method that takes in file path and verifies if the file exists. A Warning message box is raised if file is not found.
+
+        Args:
+            json_file (filepath): file path to configuration file
+
+        Raises:
+            FileNotFoundError: if file is not found a message box will appear and upon close the application will quit
+
+        Returns:
+            json_file (filepath): file path that was passed as input
+        """        
         if os.path.exists(json_file) == False:
             msgBox = QtWidgets.QMessageBox()
             msgBox.setIcon(QtWidgets.QMessageBox.Warning)
@@ -66,7 +87,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             return json_file
 
     def get_parameters(self):
-
+        """
+        Collect parameters from the GUI interface [Query Type, Tests, Part Number, Work Orders, Dates]
+        """        
         if self.variantBool.isChecked():
             self.query_type = 'Variant'
         elif self.referenceBool.isChecked():
@@ -95,13 +118,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.max_date = None
         return
 
-    def check_parameters(self):
+    def check_parameters(self):      
         self.check_tests()
         self.check_partnumber()
         self.check_workorders()
         return
 
     def check_tests(self):
+        """
+        Verify that at least one test is selected. Raises message box if no tests selected.
+        """        
         if all(value == False for value in self.test_checkboxes.values()):
             msgBox = QtWidgets.QMessageBox()
             msgBox.setIcon(QtWidgets.QMessageBox.Warning)
@@ -114,6 +140,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return
 
     def check_partnumber(self):
+        """
+        Verify that part number is 12 Digits, Numeric, and Base11 exist in inventory.json
+        """        
         if len(self.part_number) != 12:
             msgBox = QtWidgets.QMessageBox()
             msgBox.setIcon(QtWidgets.QMessageBox.Warning)
@@ -144,6 +173,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return
 
     def is_vipX_product(self):
+        """
+        Checks if part number will be querying Acoustic DB for results and notifies user that query will take longer than normal.
+        """        
         # Dictionary corresponding DC_ITEM to table name in VIPx (DFData) database
         with open(self.vipx_mapping) as f:
             self.VIPx_product_dict = json.load(f)
@@ -464,10 +496,3 @@ if __name__ == "__main__":
     print('Window Initialized\n')
     window.show()
     app.exec()
-
-    # MainWindow = QtWidgets.QMainWindow()
-    # ui = Ui_MainWindow()
-    # ui.setupUi(MainWindow)
-    # MainWindow.show()
-    # print('Load Complete.')
-    # sys.exit(app.exec_())
