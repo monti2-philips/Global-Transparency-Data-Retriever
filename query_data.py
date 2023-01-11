@@ -142,12 +142,7 @@ class QueryData():
                 print('MES Test Data collected')
                 self.data = pd.concat([self.data, MES_data])
 
-                # Resource Filtering
-                resource_query = f"(DC_OPERATION.str.contains('ACOUSTIC') & DC_RESOURCE.isin({self.resources['ACOUSTIC']})) | \
-                                (DC_OPERATION.str.contains('AIM') & DC_RESOURCE.isin({self.resources['AIM']})) | \
-                                (DC_OPERATION.str.contains('RFB') & DC_RESOURCE.isin({self.resources['RFB']})) | \
-                                (DC_OPERATION.str.contains('THERMAL') & DC_RESOURCE.isin({self.resources['THERMAL']}))"
-                self.data = self.data.query(resource_query)
+                self.data = self.resource_filter()
 
                 return self.data
 
@@ -218,6 +213,11 @@ class QueryData():
             print('MES Test Data collected')
             self.data = pd.concat([self.data, MES_data])
 
+            self.data = self.resource_filter()
+
+            return self.data
+
+    def resource_filter(self):
             # Resource Filtering
             resource_query = f"(DC_OPERATION.str.contains('ACOUSTIC') & DC_RESOURCE.isin({self.resources['ACOUSTIC']})) | \
                             (DC_OPERATION.str.contains('AIM') & DC_RESOURCE.isin({self.resources['AIM']})) | \
