@@ -75,12 +75,12 @@ class Ui_MainWindow(object):
         # Work Order Input
         self.workOrderInput = QtWidgets.QPlainTextEdit(self.dataBox)
         self.workOrderInput.setEnabled(True)
-        self.workOrderInput.setGeometry(QtCore.QRect(20, 125, 450, 90))
+        self.workOrderInput.setGeometry(QtCore.QRect(20, 145, 450, 70))
         self.workOrderInput.setToolTip("")
         self.workOrderInput.setToolTipDuration(-1)
         self.workOrderInput.setObjectName("workOrderInput")
         self.workOrderLabel = QtWidgets.QLabel(self.dataBox)
-        self.workOrderLabel.setGeometry(QtCore.QRect(20, 95, 122, 21))
+        self.workOrderLabel.setGeometry(QtCore.QRect(20, 115, 122, 21))
         self.workOrderLabel.setToolTipDuration(-1)
         self.workOrderLabel.setObjectName("workOrderLabel")
 
@@ -221,31 +221,40 @@ class Ui_MainWindow(object):
         self.thermalView.setAlternatingRowColors(True)
         self.tabWidget.addTab(self.thermalTab, "")
 
+        #Acoustic Resource Selection
+        self.acousticResourceLabel = QtWidgets.QLabel(self.dataBox)
+        self.acousticResourceLabel.setObjectName(u"acousticResourceLabel")
+        self.acousticResourceLabel.setGeometry(QtCore.QRect(200, 20, 140, 21))
+        self.acousticCombo = CheckableComboBox(self.dataBox)
+        self.acousticCombo.setObjectName(u"acousticCombo")
+        self.acousticCombo.setGeometry(QtCore.QRect(340, 20, 130, 25))
+        self.acousticCombo.setFont(font2)
+
         # AIM Resource Selection
         self.aimResourceLabel = QtWidgets.QLabel(self.dataBox)
         self.aimResourceLabel.setObjectName(u"aimResourceLabel")
-        self.aimResourceLabel.setGeometry(QtCore.QRect(200, 20, 100, 21))
+        self.aimResourceLabel.setGeometry(QtCore.QRect(200, 50, 100, 21))
         self.aimCombo = CheckableComboBox(self.dataBox)
         self.aimCombo.setObjectName(u"aimCombo")
-        self.aimCombo.setGeometry(QtCore.QRect(340, 20, 130, 25))
+        self.aimCombo.setGeometry(QtCore.QRect(340, 50, 130, 25))
         self.aimCombo.setFont(font2)
 
         # RFB Resource Selection
         self.rfbResourceLabel = QtWidgets.QLabel(self.dataBox)
         self.rfbResourceLabel.setObjectName(u"rfbResourceLabel")
-        self.rfbResourceLabel.setGeometry(QtCore.QRect(200, 50, 100, 21))
+        self.rfbResourceLabel.setGeometry(QtCore.QRect(200, 80, 100, 21))
         self.rfbCombo = CheckableComboBox(self.dataBox)
         self.rfbCombo.setObjectName(u"rfbCombo")
-        self.rfbCombo.setGeometry(QtCore.QRect(340, 50, 130, 25))
+        self.rfbCombo.setGeometry(QtCore.QRect(340, 80, 130, 25))
         self.rfbCombo.setFont(font2)
 
         # Thermal Resource Selection
         self.thermalResourceLabel = QtWidgets.QLabel(self.dataBox)
         self.thermalResourceLabel.setObjectName(u"thermalResourceLabel")
-        self.thermalResourceLabel.setGeometry(QtCore.QRect(200, 80, 140, 21))
+        self.thermalResourceLabel.setGeometry(QtCore.QRect(200, 110, 140, 21))
         self.thermalCombo = CheckableComboBox(self.dataBox)
         self.thermalCombo.setObjectName(u"thermalCombo")
-        self.thermalCombo.setGeometry(QtCore.QRect(340, 80, 130, 25))
+        self.thermalCombo.setGeometry(QtCore.QRect(340, 110, 130, 25))
         self.thermalCombo.setFont(font2)
 
         # Export Button
@@ -348,6 +357,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.thermalTab), _translate("MainWindow", "THERMAL", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.acousticTab), _translate("MainWindow", "ACOUSTIC", None))
 
+        self.acousticResourceLabel.setText(_translate("MainWindow","ACOUSTIC Resource", None))
         self.aimResourceLabel.setText(_translate("MainWindow","AIM Resource", None))
         self.rfbResourceLabel.setText(_translate("MainWindow", "RFB Resource", None))
         self.thermalResourceLabel.setText(_translate("MainWindow", "THERMAL Resource", None))
