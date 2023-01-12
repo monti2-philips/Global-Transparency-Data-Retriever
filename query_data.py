@@ -218,14 +218,25 @@ class QueryData():
             return self.data
 
     def resource_filter(self):
+        if self.resources['AIM'] == 'DC_RESOURCE':
+            self.resources['AIM'] = 'DC_SFC'
             # Resource Filtering
             resource_query = f"(DC_OPERATION.str.contains('ACOUSTIC') & DC_RESOURCE.isin({self.resources['ACOUSTIC']})) | \
-                            (DC_OPERATION.str.contains('AIM') & DC_RESOURCE.isin({self.resources['AIM']})) | \
+                            (DC_OPERATION.str.contains('AIM') & DC_SFC.isin({self.resources['AIM']})) | \
                             (DC_OPERATION.str.contains('RFB') & DC_RESOURCE.isin({self.resources['RFB']})) | \
                             (DC_OPERATION.str.contains('THERMAL') & DC_RESOURCE.isin({self.resources['THERMAL']}))"
-            self.data = self.data.query(resource_query)
+        else:
+            aim_query = f"(DC_OPERATION.str.contains('AIM') & DC_ACTUAL.isin({self.resources['AIM']}))"
+            aim_sfcs = self.data.query(aim_query)['DC_SFC'].tolist()
+            # Resource Filtering
+            resource_query = f"(DC_OPERATION.str.contains('ACOUSTIC') & DC_RESOURCE.isin({self.resources['ACOUSTIC']})) | \
+                            (DC_OPERATION.str.contains('AIM') & DC_SFC.isin({aim_sfcs})) | \
+                            (DC_OPERATION.str.contains('RFB') & DC_RESOURCE.isin({self.resources['RFB']})) | \
+                            (DC_OPERATION.str.contains('THERMAL') & DC_RESOURCE.isin({self.resources['THERMAL']}))"
 
-            return self.data
+        self.data = self.data.query(resource_query)
+
+        return self.data
 
     def VIPx_query_create(self, item_num, sfc_list, min_date, max_date):
         # Input for item_num is self.input_part_number
