@@ -368,6 +368,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "Work Orders" : [list_parse(self.work_orders)],
             "Min Date" : [self.min_date],
             "Max Date" : [self.max_date],
+            "Acoustic Resources" : [list_parse(self.acoustic_resource)],
             "AIM Resources" : [list_parse(self.aim_resource)],
             "RFB Resources" : [list_parse(self.rfb_resource)],
             "Thermal Resources" : [list_parse(self.thermal_resource)]
