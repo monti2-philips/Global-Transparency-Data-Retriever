@@ -206,10 +206,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Check if part number is VIPx product and set options based on part number
         if self.part_number in self.VIPx_product_dict:
             self.acousticCombo.addItems(self.resources["ACOUSTIC"][self.part_number])
-            print('add vipx')
         else:
             self.acousticCombo.addItems(self.resources["ACOUSTIC"]["MES"])
-            print('add MES')
 
     def check_workorders(self):
         if self.query_type == 'Variant':
