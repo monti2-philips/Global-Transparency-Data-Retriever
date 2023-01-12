@@ -6,7 +6,7 @@ import sys
 from PyQt5 import QtWidgets
 
 class QueryData():
-    def __init__(self, input_checkboxes: dict, input_part_number: str, input_text_box: list, min_date: datetime.datetime |None, max_date: datetime.datetime|None, vipx_mapping: str, database_credentials: str, aim_resources=["ANY RESOURCE"], rfb_resources=["ANY RESOURCE"], thermal_resources=["ANY RESOURCE"]):
+    def __init__(self, input_checkboxes: dict, input_part_number: str, input_text_box: list, min_date: datetime.datetime |None, max_date: datetime.datetime|None, vipx_mapping: str, database_credentials: str, acoustic_resources=["ANY RESOURCE"], aim_resources=["ANY RESOURCE"], rfb_resources=["ANY RESOURCE"], thermal_resources=["ANY RESOURCE"]):
 
         # Creating Class attributes that can be shared between methods - created upon Class Instance creation
         self.input_checkboxes = input_checkboxes
@@ -16,7 +16,7 @@ class QueryData():
         self.max_date = max_date
 
         self.resources = {
-                    "ACOUSTIC": ["ANY RESOURCE"],
+                    "ACOUSTIC": acoustic_resources,
                     "AIM": aim_resources,
                     "RFB": rfb_resources,
                     "THERMAL": thermal_resources
