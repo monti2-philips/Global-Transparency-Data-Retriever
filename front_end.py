@@ -229,6 +229,7 @@ class Ui_MainWindow(object):
         self.acousticCombo.setObjectName(u"acousticCombo")
         self.acousticCombo.setGeometry(QtCore.QRect(340, 20, 130, 25))
         self.acousticCombo.setFont(font2)
+        self.acousticCombo.setDisabled(True)
 
         # AIM Resource Selection
         self.aimResourceLabel = QtWidgets.QLabel(self.dataBox)
@@ -307,6 +308,8 @@ class Ui_MainWindow(object):
             lambda: self.minDateInput.setEnabled(True) if ((self.workOrderInput.document().isEmpty()) and (self.referenceBool.isChecked())) else self.minDateInput.setDisabled(True))
         self.referenceBool.toggled['bool'].connect(
             lambda: self.maxDateInput.setEnabled(True) if ((self.workOrderInput.document().isEmpty()) and (self.referenceBool.isChecked())) else self.maxDateInput.setDisabled(True))
+        self.partNumberInput.textChanged.connect(
+            lambda: self.acousticCombo.setEnabled(True) if (len(self.partNumberInput.text()) == 12) else (self.acousticCombo.setDisabled(True)))
 
         # Setting tab key order
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
