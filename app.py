@@ -52,6 +52,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.aimCombo.addItems(self.resources["AIM"])
         self.rfbCombo.addItems(self.resources["RFB"])
         self.thermalCombo.addItems(self.resources["THERMAL"])
+        # Set resource of Acoustic only when the combo box is enabled; reference front_end.py - this box is only enabled when 12-digit part number is entered
+        self.partNumberInput.textChanged.connect(
+            lambda: self.fill_acousticCombo() if self.acousticCombo.isEnabled() else None)
 
         # Initiate run count
         self.runCount = 0
@@ -191,6 +194,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             pass
         return
 
+    def fill_acousticCombo(self):
+        # Dictionary corresponding DC_ITEM to table name in VIPx (DFData) database
+        with open(self.vipx_mapping) as f:
+            self.VIPx_product_dict = json.load(f)
+        # Collect parameters to get part number
+        self.get_parameters()
+        # Clear current combobox list
+        self.acousticCombo.clear()
+
+        # Check if part number is VIPx product and set options based on part number
+        if self.part_number in self.VIPx_product_dict:
+            self.acousticCombo.addItems(self.resources["ACOUSTIC"][self.part_number])
+            print('add vipx')
+        else:
+            self.acousticCombo.addItems(self.resources["ACOUSTIC"]["MES"])
+            print('add MES')
+
     def check_workorders(self):
         if self.query_type == 'Variant':
             if self.work_orders == None:
@@ -246,10 +266,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             return False
 
     def get_resources(self):
+        self.acoustic_resource = self.acousticCombo.resourceList
         self.aim_resource = self.aimCombo.resourceList
         self.rfb_resource = self.rfbCombo.resourceList
         self.thermal_resource = self.thermalCombo.resourceList
-        print(f'AIM Resource: {self.aim_resource}\nRFB Resource: {self.rfb_resource}\nTHERMAL Resource: {self.thermal_resource}')
+        print(f'ACOUSTIC Resource: {self.acoustic_resource}\nAIM Resource: {self.aim_resource}\nRFB Resource: {self.rfb_resource}\nTHERMAL Resource: {self.thermal_resource}')
         return 
 
     def clear_dataViews(self):
@@ -405,7 +426,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 with warnings.catch_warnings():
                     warnings.simplefilter("ignore", UserWarning)
                     self.data = query_data.QueryData(
-                        self.test_checkboxes, self.part_number, self.work_orders, self.min_date, self.max_date, self.vipx_mapping, self.database_credentials, self.aim_resource, self.rfb_resource, self.thermal_resource).get_by_workorder()
+                        self.test_checkboxes, self.part_number, self.work_orders, self.min_date, self.max_date, self.vipx_mapping, self.database_credentials, self.acoustic_resource, self.aim_resource, self.rfb_resource, self.thermal_resource).get_by_workorder()
 
                 if isinstance(self.data, pd.DataFrame):
                     self.filter_dataframes()
@@ -435,7 +456,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     with warnings.catch_warnings():
                         warnings.simplefilter("ignore", UserWarning)
                         self.data = query_data.QueryData(
-                            self.test_checkboxes, self.part_number, self.work_orders, self.min_date, self.max_date, self.vipx_mapping, self.database_credentials, self.aim_resource, self.rfb_resource, self.thermal_resource).get_by_workorder()
+                            self.test_checkboxes, self.part_number, self.work_orders, self.min_date, self.max_date, self.vipx_mapping, self.database_credentials, self.acoustic_resource, self.aim_resource, self.rfb_resource, self.thermal_resource).get_by_workorder()
 
                     if isinstance(self.data, pd.DataFrame):
                         self.filter_dataframes()
@@ -464,7 +485,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     with warnings.catch_warnings():
                         warnings.simplefilter("ignore", UserWarning)
                         self.data = query_data.QueryData(
-                            self.test_checkboxes, self.part_number, self.work_orders, self.min_date, self.max_date, self.vipx_mapping, self.database_credentials, self.aim_resource, self.rfb_resource, self.thermal_resource).get_by_dates()
+                            self.test_checkboxes, self.part_number, self.work_orders, self.min_date, self.max_date, self.vipx_mapping, self.database_credentials, self.acoustic_resource, self.aim_resource, self.rfb_resource, self.thermal_resource).get_by_dates()
 
                     if isinstance(self.data, pd.DataFrame):
                         self.filter_dataframes()
