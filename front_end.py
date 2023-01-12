@@ -234,7 +234,7 @@ class Ui_MainWindow(object):
         # AIM Resource Selection
         self.aimResourceLabel = QtWidgets.QLabel(self.dataBox)
         self.aimResourceLabel.setObjectName(u"aimResourceLabel")
-        self.aimResourceLabel.setGeometry(QtCore.QRect(200, 50, 100, 21))
+        self.aimResourceLabel.setGeometry(QtCore.QRect(200, 50, 140, 21))
         self.aimCombo = CheckableComboBox(self.dataBox)
         self.aimCombo.setObjectName(u"aimCombo")
         self.aimCombo.setGeometry(QtCore.QRect(340, 50, 130, 25))
@@ -243,7 +243,7 @@ class Ui_MainWindow(object):
         # RFB Resource Selection
         self.rfbResourceLabel = QtWidgets.QLabel(self.dataBox)
         self.rfbResourceLabel.setObjectName(u"rfbResourceLabel")
-        self.rfbResourceLabel.setGeometry(QtCore.QRect(200, 80, 100, 21))
+        self.rfbResourceLabel.setGeometry(QtCore.QRect(200, 80, 140, 21))
         self.rfbCombo = CheckableComboBox(self.dataBox)
         self.rfbCombo.setObjectName(u"rfbCombo")
         self.rfbCombo.setGeometry(QtCore.QRect(340, 80, 130, 25))
@@ -361,7 +361,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.acousticTab), _translate("MainWindow", "ACOUSTIC", None))
 
         self.acousticResourceLabel.setText(_translate("MainWindow","ACOUSTIC Resource", None))
-        self.aimResourceLabel.setText(_translate("MainWindow","AIM Resource", None))
+        self.aimResourceLabel.setText(_translate("MainWindow","AIM Hydrophone", None))
         self.rfbResourceLabel.setText(_translate("MainWindow", "RFB Resource", None))
         self.thermalResourceLabel.setText(_translate("MainWindow", "THERMAL Resource", None))
 
