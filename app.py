@@ -1,5 +1,5 @@
 #test for git merge
-
+#on test branch 
 import warnings
 import os
 import data_transform
@@ -42,11 +42,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         app_icon = QtGui.QIcon(os.path.join(basedir, "./static/logo.ico"))
         app.setWindowIcon(app_icon)
 
+        pts = r'\\usdrdsech1vwa15\Reedsville\PTS\GlobalTransparencyDataRetrieverSourceCode'
         # Check for File Existence and Import Configuration Files
-        self.inventory_mapping = self.get_config(os.path.join(basedir, './data/inventory.json'))
-        self.resource_mapping = self.get_config(os.path.join(basedir, './data/operation-resource.json'))
-        self.vipx_mapping = self.get_config(os.path.join(basedir, './data/vipX_product.json'))
-        self.database_credentials = self.get_config(os.path.join(basedir, './data/database_credentials.json'))
+        self.inventory_mapping = self.get_config(os.path.join(pts, 'inventory.json'))
+        self.resource_mapping = self.get_config(os.path.join(pts, 'operation-resource.json'))
+        self.vipx_mapping = self.get_config(os.path.join(pts, 'vipX_product.json'))
+        self.database_credentials = self.get_config(os.path.join(pts, 'database_credentials.json'))
         
         # Set resources to comboboxes for AIM, RFB, and Thermal test stations
         with open(self.resource_mapping) as f:

@@ -4,6 +4,7 @@ import pandas as pd
 import json
 import sys
 from PyQt5 import QtWidgets
+from cryptography.fernet import Fernet
 
 class QueryData():
     def __init__(self, input_checkboxes: dict, input_part_number: str, input_text_box: list, min_date: datetime.datetime |None, max_date: datetime.datetime|None, vipx_mapping: str, database_credentials: str, acoustic_resources=["ANY RESOURCE"], aim_resources=["ANY RESOURCE"], rfb_resources=["ANY RESOURCE"], thermal_resources=["ANY RESOURCE"]):
@@ -35,22 +36,29 @@ class QueryData():
         # Empty DataFrame with set columns
         self.data = pd.DataFrame(columns=['DC_ITEM', 'DC_SFC', 'DC_TEST_DATE_TIME_LOCAL', 'DC_RESOURCE',
                         'DC_OPERATION', 'DC_MEASURE_NAME', 'DC_DESCRIPTION', 'DC_ACTUAL'], data=[])
-
+        
+        self.token = b'0VVL1pltD5FlnECVb43-sOEiJW0RErKRuhraXSEkXVg='
+        
+    #create decrypt function
+    def decryptCredentials(self,string):
+        f = Fernet(self.token)
+        return f.decrypt(string).decode("utf-8")
+        
     def MES_connection(self):
 
-        server = self.database_credentials["MES"]["server"]
-        database = self.database_credentials["MES"]["database"]
-        username = self.database_credentials["MES"]["username"]
-        password = self.database_credentials["MES"]["password"]
+        server = self.decryptCredentials(self.database_credentials["MES"]["server"])
+        database = self.decryptCredentials(self.database_credentials["MES"]["database"])
+        username = self.decryptCredentials(self.database_credentials["MES"]["username"])
+        password = self.decryptCredentials(self.database_credentials["MES"]["password"])
 
         return self.database_connection(server, database, username, password)
-
+    
     def VIPx_connection(self):
 
-        server = self.database_credentials["DFData"]["server"]
-        database = self.database_credentials["DFData"]["database"]
-        username = self.database_credentials["DFData"]["username"]
-        password = self.database_credentials["DFData"]["password"]
+        server = self.decryptCredentials(self.database_credentials["DFData"]["server"])
+        database = self.decryptCredentials(self.database_credentials["DFData"]["database"])
+        username = self.decryptCredentials(self.database_credentials["DFData"]["username"])
+        password = self.decryptCredentials(self.database_credentials["DFData"]["password"])
 
         return self.database_connection(server, database, username, password)
 
