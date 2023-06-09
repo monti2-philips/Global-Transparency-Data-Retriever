@@ -8,7 +8,7 @@ a = Analysis(
     ['app.py'],
     pathex=[],
     binaries=[],
-    datas=[('data','data'),('static','static')],
+    datas=[('static','static')],
     hiddenimports=['.\env\Lib\site-packages\pandas\io\excel\_xlsxwriter.py'],
     hookspath=[],
     hooksconfig={},
