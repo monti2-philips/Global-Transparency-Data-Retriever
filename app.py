@@ -40,12 +40,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         app_icon = QtGui.QIcon(os.path.join(basedir, "./static/logo.ico"))
         app.setWindowIcon(app_icon)
 
-        pts = r'\\usdrdsech1vwa15\Reedsville\PTS\GlobalTransparencyDataRetrieverSourceCode'
+        path_res = r'\\usdrdsech1vwa15\Reedsville\DATA\GlobalTransparencyDataRetrieverSourceCode'
         # Check for File Existence and Import Configuration Files
-        self.inventory_mapping = self.get_config(os.path.join(pts, 'inventory.json'))
-        self.resource_mapping = self.get_config(os.path.join(pts, 'operation-resource.json'))
-        self.vipx_mapping = self.get_config(os.path.join(pts, 'vipX_product.json'))
-        self.database_credentials = self.get_config(os.path.join(pts, 'database_credentials.json'))
+        self.inventory_mapping = self.get_config(os.path.join(path_res, 'inventory.json'))
+        self.resource_mapping = self.get_config(os.path.join(path_res, 'operation-resource.json'))
+        self.vipx_mapping = self.get_config(os.path.join(path_res, 'vipX_product.json'))
+        self.database_credentials = self.get_config(os.path.join(path_res, 'database_credentials.json'))
         
         # Set resources to comboboxes for AIM, RFB, and Thermal test stations
         with open(self.resource_mapping) as f:
