@@ -1,1 +1,1 @@
-pyinstaller app.spec
+pyinstaller app_onefile.spec
