@@ -191,7 +191,7 @@ class QueryData():
                             SELECT DC_SFC FROM ( 
                                 SELECT DC_SFC FROM rep_ods.dbo.VW_PH_ADHOC_62_PARAMETRIC 
                                 WHERE 
-                                    DC_SHOP_ORDER = '{"' OR DC_SHOP_ORDER = '".join(work_orders)}' AND
+                                    (DC_SHOP_ORDER = '{"' OR DC_SHOP_ORDER = '".join(work_orders)}') AND
                                     DC_TEST_DATE_TIME_LOCAL > '{min_date.strftime('%Y-%m-%d')}' AND
                                     DC_TEST_DATE_TIME_LOCAL < '{max_date.strftime('%Y-%m-%d')}'
                             ) a GROUP BY DC_SFC
