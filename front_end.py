@@ -389,5 +389,5 @@ class Ui_MainWindow(object):
                                       "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Select Test(s) for Query</p>\n"
                                       "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Enter 12-digit part number</p>\n"
                                       "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-ind"
-                                      "ent:0px;\">- Select Minimum and Maximum Date</p>\n"
+                                      "ent:0px;\">- Select Minimum and Maximum Date (Work Order Dates)</p>\n"
                                       "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">(longer ranges will cause longer query times)</p></body></html>", None))
